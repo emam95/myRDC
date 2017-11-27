@@ -19,6 +19,7 @@ class Client(object):
 		size=(w,h)
 		self.screen = pygame.display.set_mode(size) 
 		self.clock = pygame.time.Clock() # clock for timing
+		pygame.display.set_caption('myRDC', 'myRDC')
 
 	def run(self):
 		self.my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
