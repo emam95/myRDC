@@ -6,7 +6,7 @@ from PIL import Image
 import pyscreenshot as ImageGrab
 import zlib
 
-IMAGE_SIZE = 1024, 768
+IMAGE_SIZE = 1366, 768
 
 class Client(object):
 	def __init__(self):
@@ -14,9 +14,7 @@ class Client(object):
 		self.server_host = 'localhost'
 		self.my_socket = None
 		pygame.init()
-		w = 1024
-		h = 768
-		size=(w,h)
+		size=(IMAGE_SIZE)
 		self.screen = pygame.display.set_mode(size) 
 		self.clock = pygame.time.Clock() # clock for timing
 		pygame.display.set_caption('myRDC', 'myRDC')
@@ -24,7 +22,7 @@ class Client(object):
 	def run(self):
 		self.my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.my_socket.connect((self.server_host, 6666))
-		max_size = 3 * 1024 * 768
+		max_size = 3 * IMAGE_SIZE[0] * IMAGE_SIZE[1]
 		try:
 			while self.running:
 				data = self.my_socket.recv(max_size)

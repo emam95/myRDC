@@ -5,7 +5,7 @@ from PIL import Image
 import pyscreenshot as ImageGrab
 import zlib
 
-IMAGE_SIZE = 1024, 768
+IMAGE_SIZE = 1366, 768
 PORT_NUMBER = 6666
 
 def capscreen():
