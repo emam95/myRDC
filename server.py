@@ -9,7 +9,8 @@ IMAGE_SIZE = 1366, 768
 PORT_NUMBER = 6666
 
 def capscreen():
-	return zlib.compress(ImageGrab.grab().resize(IMAGE_SIZE).tobytes())
+	#return zlib.compress(ImageGrab.grab().resize(IMAGE_SIZE).tobytes())
+	return ImageGrab.grab().resize(IMAGE_SIZE).tobytes()
 
 class Server():
 	def __init__(self):
