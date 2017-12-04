@@ -4,6 +4,7 @@ import time
 from PIL import Image
 import pyscreenshot as ImageGrab
 import zlib
+from pymouse import PyMouse
 
 IMAGE_SIZE = 1366, 768
 PORT_NUMBER = 6666
@@ -18,6 +19,7 @@ class Server():
 		self.socket = None
 		self.client_socket = None
 		self.client_address = None
+		self.mouse = PyMouse()
 
 	def run(self):
 		self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -26,7 +28,7 @@ class Server():
 		print('Waiting for connections...')
 		self.client_socket, self.client_address = self.socket.accept()
 		print('connected to ' + str(self.client_address))
-		#threading.Thread(target=self.receive).start()
+		threading.Thread(target=self.receive).start()
 		#self.client_socket.send(str(IMAGE_SIZE).encode()) #sending dimensions
 		while self.running:
 			self.sendcap()
@@ -37,7 +39,11 @@ class Server():
 
 	def receive(self):
 		while self.running:
-			pass  #TODO
+			mouse_location = (self.client_socket.recv(1024).decode())
+			print(mouse_location)
+			if ',' in mouse_location:
+				x, y = map(float, mouse_location.split(','))
+				self.mouse.move(int(x), int(y))
 
 	def kill(self):
 		self.running = False

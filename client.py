@@ -5,6 +5,7 @@ import threading
 from PIL import Image
 import pyscreenshot as ImageGrab
 import zlib
+from pymouse import PyMouse
 
 IMAGE_SIZE = 1024, 768
 
@@ -18,6 +19,7 @@ class Client(object):
 		self.screen = pygame.display.set_mode(size) 
 		self.clock = pygame.time.Clock() # clock for timing
 		pygame.display.set_caption('myRDC', 'myRDC')
+		self.mouse = PyMouse()
 
 	def run(self):
 		self.my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -35,6 +37,7 @@ class Client(object):
 					data = self.my_socket.recv(max_size)
 				else:
 					data += self.my_socket.recv(max_size)
+				self.my_socket.send((str(self.mouse.position()[0]) + "," + str(self.mouse.position()[1])).encode())
 				for event in pygame.event.get():
 					if event.type == pygame.QUIT:
 						self.running = False
